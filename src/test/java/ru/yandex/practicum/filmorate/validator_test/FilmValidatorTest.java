@@ -14,13 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FilmValidatorTest {
 
-    private ValidationException e;
-
     @DisplayName("Название не может быть пустым")
     @Test
     void shouldThrowValidationExceptionFromFilmWithEmptyName() {
         Film emptyNameFilm = new Film("", "description", LocalDate.now(), 200);
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> FilmValidator.checkFilm(emptyNameFilm));
         assertEquals("Название не может быть пустым", e.getMessage());
@@ -30,7 +28,7 @@ public class FilmValidatorTest {
     @Test
     void shouldThrowValidationExceptionWhenDescriptionMoreThan200Symbols() {
         Film bigDescriptionFilm = new Film("name", "d".repeat(201), LocalDate.now(), 200);
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> FilmValidator.checkFilm(bigDescriptionFilm));
         assertEquals("Максимальная длина описания — 200 символов", e.getMessage());
@@ -40,7 +38,7 @@ public class FilmValidatorTest {
     @Test
     void shouldThrowValidationExceptionWhenReleaseDateEarlierThanMovieBirthday() {
         Film oldFilm = new Film("name", "description", LocalDate.of(1885, 12, 27), 200);
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> FilmValidator.checkFilm(oldFilm));
         assertEquals("Дата релиза — не раньше 28 декабря 1895", e.getMessage());
@@ -50,7 +48,7 @@ public class FilmValidatorTest {
     @Test
     void shouldThrowValidationExceptionWhenFilmDurationNotPositive() {
         Film oldFilm = new Film("name", "description", LocalDate.now(), 0);
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> FilmValidator.checkFilm(oldFilm));
         assertEquals("Продолжительность фильма должна быть положительной", e.getMessage());
@@ -66,7 +64,7 @@ public class FilmValidatorTest {
         Film updateFilm = new Film("name", "description", LocalDate.now(), 200);
         updateFilm.setId(9999);
 
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> FilmValidator.checkId(films, updateFilm));
         assertEquals("Обновить фильм с id:" + updateFilm.getId() + " невозможно по причине его отсутствия", e.getMessage());

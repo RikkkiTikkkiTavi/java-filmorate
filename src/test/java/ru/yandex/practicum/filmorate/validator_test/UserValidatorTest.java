@@ -14,45 +14,54 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserValidatorTest {
 
-    private ValidationException e;
-
-    @DisplayName("Электронная почта не может быть пустой и должна содержать символ @")
+    @DisplayName("Электронная почта не может быть пустой")
     @Test
     void shouldThrowValidationExceptionWhenEmailIsEmpty() {
         User nonEmailUser = new User("", "login", LocalDate.of(1999, 9, 9));
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkUser(nonEmailUser));
         assertEquals("Электронная почта не может быть пустой и должна содержать символ @", e.getMessage());
+    }
 
+    @DisplayName("Электронная почта должна содержать символ @")
+    @Test
+    void shouldThrowValidationExceptionWhenEmailNotContainAt() {
         User user = new User("mail.ru", "login", LocalDate.of(1999, 9, 9));
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkUser(user));
         assertEquals("Электронная почта не может быть пустой и должна содержать символ @", e.getMessage());
     }
 
-    @DisplayName("Логин не может быть пустым и содержать пробелы")
+    @DisplayName("Логин не может содержать пробелы")
     @Test
-    void shouldThrowValidationExceptionWhenLoginIsEmptyOrContainsSpaces() {
+    void shouldThrowValidationExceptionWhenLoginContainsSpaces() {
         User user = new User("mail@mali.ru", "login login", LocalDate.of(1999, 9, 9));
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkUser(user));
         assertEquals("Логин не может быть пустым и содержать пробелы", e.getMessage());
 
+
+    }
+
+    @DisplayName("Логин не может быть пустым")
+    @Test
+    void shouldThrowValidationExceptionWhenLoginIsEmpty() {
         User emptyLoginUser = new User("mail@mali.ru", "", LocalDate.of(1999, 9, 9));
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkUser(emptyLoginUser));
         assertEquals("Логин не может быть пустым и содержать пробелы", e.getMessage());
     }
 
+
     @DisplayName("Дата рождения не может быть в будущем")
     @Test
     void shouldThrowValidationExceptionWhenBirthdayInFuture() {
         User futureUser = new User("mail@mali.ru", "login", LocalDate.of(9999, 9, 9));
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkUser(futureUser));
         assertEquals("Дата рождения не может быть в будущем", e.getMessage());
@@ -77,7 +86,7 @@ public class UserValidatorTest {
         User updateUser = new User("mail@mali.ru", "login", LocalDate.of(1999, 9, 9));
         updateUser.setId(9999);
 
-        e = assertThrows(
+        ValidationException e = assertThrows(
                 ValidationException.class,
                 () -> UserValidator.checkId(users, updateUser));
         assertEquals("Обновить пользователя с id:" + updateUser.getId() + " невозможно по причине его отсутствия", e.getMessage());
