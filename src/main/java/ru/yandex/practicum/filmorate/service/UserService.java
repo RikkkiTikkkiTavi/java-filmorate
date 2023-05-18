@@ -1,22 +1,20 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 import ru.yandex.practicum.filmorate.validator.UserValidator;
 
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UserService {
-
-    private final InMemoryUserStorage storage;
-
-    @Autowired
-    public UserService(InMemoryUserStorage storage) {
-        this.storage = storage;
-    }
+    private final UserStorage storage;
 
     public User getUserById(int id) {
         UserValidator.checkId(storage.findAllMap(), id);
@@ -82,5 +80,17 @@ public class UserService {
             friends.add(getUserById(id));
         }
         return friends;
+    }
+
+    public List<User> findAll() {
+        return storage.findAll();
+    }
+
+    public User create(User user) {
+        return storage.create(user);
+    }
+
+    public User update(User user) {
+        return storage.update(user);
     }
 }
