@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
 
@@ -10,13 +12,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class FilmService {
-    private final InMemoryFilmStorage storage;
-
-    @Autowired
-    public FilmService(InMemoryFilmStorage storage) {
-        this.storage = storage;
-    }
+    private final FilmStorage storage;
 
     public Film getFilmById(int filmId) {
         FilmValidator.checkId(storage.findAllMap(), filmId);
@@ -45,5 +43,17 @@ public class FilmService {
     public List<Film> getTopLikesFilms(int count) {
         return storage.findAll().stream().sorted(((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())).limit(count)
                         .collect(Collectors.toList());
+    }
+
+    public List<Film> findAll() {
+        return storage.findAll();
+    }
+
+    public Film create(Film film) {
+        return storage.create(film);
+    }
+
+    public Film update(Film film) {
+        return storage.update(film);
     }
 }

@@ -1,39 +1,32 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.List;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 public class FilmController {
-    private final InMemoryFilmStorage storage;
     private final FilmService service;
-
-    @Autowired
-    public FilmController(FilmService service, InMemoryFilmStorage storage) {
-        this.storage = storage;
-        this.service = service;
-    }
 
     @GetMapping("/films")
     public List<Film> findAll() {
-        return storage.findAll();
+        return service.findAll();
     }
 
     @PostMapping("/films")
     public Film create(@RequestBody Film film) {
-        return storage.create(film);
+        return service.create(film);
     }
 
     @PutMapping("/films")
     public Film update(@RequestBody Film film) {
-        return storage.update(film);
+        return service.update(film);
     }
 
     @GetMapping("/films/{id}")
