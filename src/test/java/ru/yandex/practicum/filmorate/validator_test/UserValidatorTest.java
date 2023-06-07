@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.validator_test;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.validator.UserValidator;
@@ -86,9 +87,9 @@ public class UserValidatorTest {
         User updateUser = new User("mail@mali.ru", "login", LocalDate.of(1999, 9, 9));
         updateUser.setId(9999);
 
-        ValidationException e = assertThrows(
-                ValidationException.class,
+        UserNotFoundException e = assertThrows(
+                UserNotFoundException.class,
                 () -> UserValidator.checkId(users, updateUser));
-        assertEquals("Обновить пользователя с id:" + updateUser.getId() + " невозможно по причине его отсутствия", e.getMessage());
+        assertEquals("Пользователя с id:" + updateUser.getId() + " не существует", e.getMessage());
     }
 }

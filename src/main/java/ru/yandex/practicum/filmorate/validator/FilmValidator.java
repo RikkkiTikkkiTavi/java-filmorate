@@ -1,11 +1,14 @@
 package ru.yandex.practicum.filmorate.validator;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exception.LikeNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 public class FilmValidator {
@@ -29,7 +32,19 @@ public class FilmValidator {
 
     public static void checkId(Map<Integer, Film> films, Film film) {
         if (!films.containsKey(film.getId())) {
-            throw new ValidationException("Обновить фильм с id:" + film.getId() + " невозможно по причине его отсутствия");
+            throw new FilmNotFoundException("Фильм с id:" + film.getId() + "не существует");
+        }
+    }
+
+    public static void checkId(Map<Integer, Film> films, int filmId) {
+        if (!films.containsKey(filmId)) {
+            throw new FilmNotFoundException("Фильм с id:" + filmId + "не существует");
+        }
+    }
+
+    public static void checkLikes(Set<Integer> likes, int id) {
+        if (!likes.contains(id)) {
+            throw new LikeNotFoundException("Лайк от пользователя с id:" + id + " не существует");
         }
     }
 }

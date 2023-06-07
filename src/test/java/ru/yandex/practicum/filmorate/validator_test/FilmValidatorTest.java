@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.validator_test;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
@@ -64,9 +65,9 @@ public class FilmValidatorTest {
         Film updateFilm = new Film("name", "description", LocalDate.now(), 200);
         updateFilm.setId(9999);
 
-        ValidationException e = assertThrows(
-                ValidationException.class,
+        FilmNotFoundException e = assertThrows(
+                FilmNotFoundException.class,
                 () -> FilmValidator.checkId(films, updateFilm));
-        assertEquals("Обновить фильм с id:" + updateFilm.getId() + " невозможно по причине его отсутствия", e.getMessage());
+        assertEquals("Фильм с id:" + updateFilm.getId() + "не существует", e.getMessage());
     }
 }
