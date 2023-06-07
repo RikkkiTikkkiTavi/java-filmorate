@@ -1,14 +1,18 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.MPA;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
 
 import java.util.*;
 
 @Component
+@Qualifier("InMemoryFilmStorage")
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
 
@@ -16,15 +20,20 @@ public class InMemoryFilmStorage implements FilmStorage {
     private int id = 1;
 
     @Override
-    public Map<Integer, Film> findAllMap() {
-        return films;
-    }
-
-    @Override
     public List<Film> findAll() {
         log.debug("Получен запрос GET");
         log.debug("Текущее количество фильмов: {}", films.size());
         return new ArrayList<>(films.values());
+    }
+
+    @Override
+    public List<Genre> findGenres() {
+        return null;
+    }
+
+    @Override
+    public List<MPA> findMPA() {
+        return null;
     }
 
     @Override
@@ -43,7 +52,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film update(Film film) {
         log.debug("Получен запрос PUT");
         FilmValidator.checkFilm(film);
-        FilmValidator.checkId(films, film);
+        FilmValidator.checkId(findAll(), film);
         if (film.getLikes() == null) {
             film.setLikes(new TreeSet<>());
         }

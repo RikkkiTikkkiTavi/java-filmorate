@@ -6,6 +6,8 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -26,14 +28,22 @@ public class UserValidator {
         }
     }
 
-    public static void checkId(Map<Integer, User> users, User user) {
-        if (!users.containsKey(user.getId())) {
+    public static void checkId(List<User> users, User user) {
+        Map<Integer, User> usersMap = new HashMap<>();
+        for (User client : users) {
+            usersMap.put(client.getId(), client);
+        }
+        if (!usersMap.containsKey(user.getId())) {
             throw new UserNotFoundException("Пользователя с id:" + user.getId() + " не существует");
         }
     }
 
-    public static void checkId(Map<Integer, User> users, int id) {
-        if (!users.containsKey(id)) {
+    public static void checkId(List<User> users, int id) {
+        Map<Integer, User> usersMap = new HashMap<>();
+        for (User client : users) {
+            usersMap.put(client.getId(), client);
+        }
+        if (!usersMap.containsKey(id)) {
             throw new UserNotFoundException("Пользователя с id:" + id + " не существует");
         }
     }

@@ -17,11 +17,6 @@ public class InMemoryUserStorage implements UserStorage {
     private int id = 1;
 
     @Override
-    public Map<Integer, User> findAllMap() {
-        return users;
-    }
-
-    @Override
     public List<User> findAll() {
         log.info("Получен запрос GET");
         log.info("Количество пользователей: {}", users.size());
@@ -43,7 +38,7 @@ public class InMemoryUserStorage implements UserStorage {
     public User update(User user) {
         log.info("Получен запрос PUT");
         UserValidator.checkUser(user);
-        UserValidator.checkId(users, user);
+        UserValidator.checkId(findAll(), user);
         users.put(user.getId(), user);
         log.debug("Пользователь обновлен: {}", user);
         return user;

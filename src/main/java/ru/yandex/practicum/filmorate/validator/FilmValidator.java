@@ -7,8 +7,7 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class FilmValidator {
@@ -28,16 +27,27 @@ public class FilmValidator {
         if (film.getDuration() <= 0) {
             throw new ValidationException("Продолжительность фильма должна быть положительной");
         }
+        if (film.getLikes() == null) {
+            film.setLikes(new TreeSet<>());
+        }
     }
 
-    public static void checkId(Map<Integer, Film> films, Film film) {
-        if (!films.containsKey(film.getId())) {
+    public static void checkId(List<Film> films, Film film) {
+        Map<Integer, Film> filmMap = new HashMap<>();
+        for(Film cinema : films) {
+            filmMap.put(cinema.getId(),film);
+        }
+        if (!filmMap.containsKey(film.getId())) {
             throw new FilmNotFoundException("Фильм с id:" + film.getId() + "не существует");
         }
     }
 
-    public static void checkId(Map<Integer, Film> films, int filmId) {
-        if (!films.containsKey(filmId)) {
+    public static void checkId(List<Film> films, int filmId) {
+        Map<Integer, Film> filmMap = new HashMap<>();
+        for(Film film : films) {
+            filmMap.put(film.getId(),film);
+        }
+        if (!filmMap.containsKey(filmId)) {
             throw new FilmNotFoundException("Фильм с id:" + filmId + "не существует");
         }
     }

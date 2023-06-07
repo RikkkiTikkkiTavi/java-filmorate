@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 import ru.yandex.practicum.filmorate.validator.UserValidator;
@@ -14,27 +15,22 @@ public class UserService {
     private final UserStorage storage;
 
     public User getUserById(int id) {
-        UserValidator.checkId(storage.findAllMap(), id);
-        return storage.findAllMap().get(id);
+        UserValidator.checkId(findAll(), id);
+        return findAllMap().get(id);
     }
 
     public void addFriend(int userId, int friendId) {
         User userOne = getUserById(userId);
-        User userTwo = getUserById(friendId);
         Set<Integer> userOneFriends = new TreeSet<>();
-        Set<Integer> userTwoFriends = new TreeSet<>();
         if (userOne.getFriends() != null) {
             userOneFriends = userOne.getFriends();
         }
-        if (userTwo.getFriends() != null) {
-            userTwoFriends = userTwo.getFriends();
+        if (friendId <= 0) {
+            throw new UserNotFoundException("отрицательный id друга");
         }
         userOneFriends.add(friendId);
-        userTwoFriends.add(userId);
         userOne.setFriends(userOneFriends);
-        userTwo.setFriends(userTwoFriends);
         storage.update(userOne);
-        storage.update(userTwo);
     }
 
     public void removeFriend(int userId, int friendId) {
@@ -88,6 +84,15 @@ public class UserService {
     }
 
     public User update(User user) {
+        UserValidator.checkId(findAll(),user);
         return storage.update(user);
+    }
+
+    private Map<Integer, User> findAllMap() {
+        Map<Integer, User> filmMap = new HashMap<>();
+        for (User user : findAll()) {
+            filmMap.put(user.getId(), user);
+        }
+        return filmMap;
     }
 }
