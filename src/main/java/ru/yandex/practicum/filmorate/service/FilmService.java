@@ -76,8 +76,8 @@ public class FilmService {
     }
 
     public MPA getMPAById(int id) {
-        for(MPA mpa : findMPA()) {
-            if(mpa.getId() == id) {
+        for (MPA mpa : findMPA()) {
+            if (mpa.getId() == id) {
                 return mpa;
             } else {
                 throw new MPANotFoundException("Рейтинга с таким id не существует");
@@ -87,8 +87,8 @@ public class FilmService {
     }
 
     public Genre getGenreById(int id) {
-        for(Genre genre : findGenres()) {
-            if(genre.getId() == id) {
+        for (Genre genre : findGenres()) {
+            if (genre.getId() == id) {
                 return genre;
             } else {
                 throw new GenreNotFoundException("Жанра с таким id не существует");
@@ -99,8 +99,8 @@ public class FilmService {
 
     private Map<Integer, Film> findAllMap() {
         Map<Integer, Film> filmMap = new HashMap<>();
-        for(Film film : findAll()) {
-            filmMap.put(film.getId(),film);
+        for (Film film : findAll()) {
+            filmMap.put(film.getId(), film);
         }
         return filmMap;
     }
