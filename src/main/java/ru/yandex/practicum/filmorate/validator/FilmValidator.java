@@ -34,8 +34,8 @@ public class FilmValidator {
 
     public static void checkId(List<Film> films, Film film) {
         Map<Integer, Film> filmMap = new HashMap<>();
-        for(Film cinema : films) {
-            filmMap.put(cinema.getId(),film);
+        for (Film cinema : films) {
+            filmMap.put(cinema.getId(), film);
         }
         if (!filmMap.containsKey(film.getId())) {
             throw new FilmNotFoundException("Фильм с id:" + film.getId() + "не существует");
@@ -44,8 +44,8 @@ public class FilmValidator {
 
     public static void checkId(List<Film> films, int filmId) {
         Map<Integer, Film> filmMap = new HashMap<>();
-        for(Film film : films) {
-            filmMap.put(film.getId(),film);
+        for (Film film : films) {
+            filmMap.put(film.getId(), film);
         }
         if (!filmMap.containsKey(filmId)) {
             throw new FilmNotFoundException("Фильм с id:" + filmId + "не существует");
