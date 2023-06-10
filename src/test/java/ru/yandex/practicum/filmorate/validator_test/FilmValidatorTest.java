@@ -39,7 +39,7 @@ public class FilmValidatorTest {
     @DisplayName("Максимальная длина описания — 200 символов")
     @Test
     void shouldThrowValidationExceptionWhenDescriptionMoreThan200Symbols() {
-        film.setDuration(201);
+        film.setDescription("201".repeat(201));
 
         ValidationException e = assertThrows(
                 ValidationException.class,
