@@ -20,9 +20,14 @@ public interface FilmStorage {
     List<Mpa> findMPA();
 
     Film findFilmById(int id);
+
     Genre findGenreById(int id);
+
     Mpa findMpaById(int id);
+
     List<Film> getTopLikesFilms(int count);
+
     void addLike(int filmId, int userId);
+
     void deleteLike(int filmId, int userId);
 }
