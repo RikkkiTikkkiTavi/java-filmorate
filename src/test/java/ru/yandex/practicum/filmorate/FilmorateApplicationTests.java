@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.MPA;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDbStorage;
@@ -29,7 +29,6 @@ class FilmorateApplicationTests {
     private final FilmDbStorage filmStorage;
     User testUser;
     Film testFilm;
-
     List<User> users;
     List<Film> films;
 
@@ -49,7 +48,7 @@ class FilmorateApplicationTests {
                 .duration(200)
                 .releaseDate(LocalDate.now())
                 .likes(new TreeSet<>())
-                .mpa(MPA.builder().id(1).build())
+                .mpa(Mpa.builder().id(1).build())
                 .genres(new TreeSet<>(Comparator.comparingInt(Genre::getId)))
                 .build();
 
@@ -120,7 +119,7 @@ class FilmorateApplicationTests {
                 .duration(300)
                 .releaseDate(LocalDate.now())
                 .likes(new TreeSet<>())
-                .mpa(MPA.builder().id(2).build())
+                .mpa(Mpa.builder().id(2).build())
                 .build();
         assertEquals(filmStorage.update(updateFilm), updateFilm);
         assertEquals(filmStorage.findAll().get(0), updateFilm);
@@ -136,7 +135,7 @@ class FilmorateApplicationTests {
         assertEquals(filmStorage.findGenres().get(5).getId(), 6);
     }
 
-    @DisplayName("Метод findMPA() возвращает список всех рейтингов")
+    @DisplayName("Метод findMpa() возвращает список всех рейтингов")
     @Test
     public void findMPAReturnAllGenres() {
         assertEquals(filmStorage.findMPA().size(), 5);

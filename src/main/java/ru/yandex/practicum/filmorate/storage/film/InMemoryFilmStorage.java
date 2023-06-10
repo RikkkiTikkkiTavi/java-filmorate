@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.MPA;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
 
 import java.util.*;
@@ -15,6 +15,15 @@ import java.util.*;
 @Qualifier("InMemoryFilmStorage")
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
+    @Override
+    public void addLike(int filmId, int userId) {
+
+    }
+
+    @Override
+    public void deleteLike(int filmId, int userId) {
+
+    }
 
     private final Map<Integer, Film> films = new HashMap<>();
     private int id = 1;
@@ -32,7 +41,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public List<MPA> findMPA() {
+    public List<Mpa> findMPA() {
         return null;
     }
 
@@ -52,7 +61,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film update(Film film) {
         log.debug("Получен запрос PUT");
         FilmValidator.checkFilm(film);
-        FilmValidator.checkId(findAll(), film);
         if (film.getLikes() == null) {
             film.setLikes(new TreeSet<>());
         }
@@ -60,5 +68,25 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.put(id, film);
         log.debug("Обновлен фильм: {}", film);
         return film;
+    }
+
+    @Override
+    public Film findFilmById(int id) {
+        return null;
+    }
+
+    @Override
+    public Genre findGenreById(int id) {
+        return null;
+    }
+
+    @Override
+    public Mpa findMpaById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Film> getTopLikesFilms(int count) {
+        return null;
     }
 }

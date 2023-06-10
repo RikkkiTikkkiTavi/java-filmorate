@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.MPA;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.List;
@@ -64,13 +64,13 @@ public class FilmController {
     }
 
     @GetMapping("/mpa")
-    public List<MPA> getRatings() {
-        return service.findMPA();
+    public List<Mpa> getRatings() {
+        return service.findMpa();
     }
 
     @GetMapping("/mpa/{id}")
-    public MPA getRating(@PathVariable("id") int id) {
-        return service.getMPAById(id);
+    public Mpa getRating(@PathVariable("id") int id) {
+        return service.getMpaById(id);
     }
 }
 

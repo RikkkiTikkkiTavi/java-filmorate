@@ -10,4 +10,14 @@ public interface UserStorage {
     User create(User user);
 
     User update(User user);
+
+    User findUserById(int id);
+
+    void addFriend(int userId, int friendId);
+
+    void removeFriend(int userId, int friendId);
+
+    List<User> getUserFriends(int userId);
+
+    List<User> getMutualFriends(int userId, int friendId);
 }

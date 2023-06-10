@@ -12,11 +12,11 @@ public class Film {
 
     private Set<Integer> likes;
     private int id;
-    private final String name;
-    private final String description;
-    private final LocalDate releaseDate;
-    private final int duration;
-    private MPA mpa;
+    private String name;
+    private String description;
+    private LocalDate releaseDate;
+    private int duration;
+    private Mpa mpa;
     private Set<Genre> genres;
 
 }

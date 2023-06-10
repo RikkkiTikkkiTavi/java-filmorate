@@ -11,8 +11,8 @@ import java.util.Set;
 public class User {
         private Set<Integer> friends;
         private int id;
-        private final String email;
-        private final String login;
+        private String email;
+        private String login;
         private String name;
-        private final LocalDate birthday;
+        private LocalDate birthday;
 }
