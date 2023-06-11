@@ -17,7 +17,7 @@ public interface FilmStorage {
 
     List<Genre> findGenres();
 
-    List<Mpa> findMPA();
+    List<Mpa> findMpa();
 
     Film findFilmById(int id);
 

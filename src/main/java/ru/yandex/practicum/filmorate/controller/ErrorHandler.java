@@ -40,7 +40,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNonExistedMPA(final MpaNotFoundException e) {
+    public ErrorResponse handleNonExistedMpa(final MpaNotFoundException e) {
         return new ErrorResponse(
                 e.getMessage());
     }

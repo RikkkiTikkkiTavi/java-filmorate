@@ -31,9 +31,13 @@ class FilmorateApplicationTests {
     Film testFilm;
     List<User> users;
     List<Film> films;
+    Mpa mpa;
 
     @BeforeEach
     public void initEach() {
+        mpa = new Mpa();
+        mpa.setId(1);
+
         testUser = User.builder()
                 .name("name")
                 .login("login")
@@ -48,7 +52,7 @@ class FilmorateApplicationTests {
                 .duration(200)
                 .releaseDate(LocalDate.now())
                 .likes(new TreeSet<>())
-                .mpa(Mpa.builder().id(1).build())
+                .mpa(mpa)
                 .genres(new TreeSet<>(Comparator.comparingInt(Genre::getId)))
                 .build();
 
@@ -112,6 +116,7 @@ class FilmorateApplicationTests {
     @DisplayName("Метод update() обновляет данные фильма и возвращает обновленный объект Film")
     @Test
     public void updateReturnUpdatedFilm() {
+        mpa.setId(2);
         Film updateFilm = Film.builder()
                 .id(filmStorage.findAll().get(0).getId())
                 .name("newName")
@@ -119,7 +124,7 @@ class FilmorateApplicationTests {
                 .duration(300)
                 .releaseDate(LocalDate.now())
                 .likes(new TreeSet<>())
-                .mpa(Mpa.builder().id(2).build())
+                .mpa(mpa)
                 .build();
         assertEquals(filmStorage.update(updateFilm), updateFilm);
         assertEquals(filmStorage.findAll().get(0), updateFilm);
@@ -137,11 +142,11 @@ class FilmorateApplicationTests {
 
     @DisplayName("Метод findMpa() возвращает список всех рейтингов")
     @Test
-    public void findMPAReturnAllGenres() {
-        assertEquals(filmStorage.findMPA().size(), 5);
-        assertEquals(filmStorage.findMPA().get(0).getName(), "G");
-        assertEquals(filmStorage.findMPA().get(0).getId(), 1);
-        assertEquals(filmStorage.findMPA().get(4).getName(), "NC-17");
-        assertEquals(filmStorage.findMPA().get(4).getId(), 5);
+    public void findMpaReturnAllGenres() {
+        assertEquals(filmStorage.findMpa().size(), 5);
+        assertEquals(filmStorage.findMpa().get(0).getName(), "G");
+        assertEquals(filmStorage.findMpa().get(0).getId(), 1);
+        assertEquals(filmStorage.findMpa().get(4).getName(), "NC-17");
+        assertEquals(filmStorage.findMpa().get(4).getId(), 5);
     }
 }

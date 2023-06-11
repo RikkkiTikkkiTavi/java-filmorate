@@ -41,7 +41,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public List<Mpa> findMPA() {
+    public List<Mpa> findMpa() {
         return null;
     }
 

@@ -55,7 +55,7 @@ public class FilmService {
     }
 
     public List<Mpa> findMpa() {
-        return storage.findMPA();
+        return storage.findMpa();
     }
 
     public Mpa getMpaById(int id) {
