@@ -77,7 +77,7 @@ public class UserDbStorage implements UserStorage {
     public User update(User user) {
         findUserById(user.getId());
         if (user.getFriends() == null) {
-            user.setFriends(new TreeSet<>());
+            user.setFriends(new HashSet<>());
         }
         String sqlQuery = "update users set " +
                 "name = ?, email = ?, birthday = ? , login = ?" +

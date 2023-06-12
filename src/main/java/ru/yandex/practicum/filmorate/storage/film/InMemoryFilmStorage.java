@@ -50,7 +50,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.info("Получен запрос POST");
         FilmValidator.checkFilm(film);
         film.setId(id);
-        film.setLikes(new TreeSet<>());
+        film.setLikes(new HashSet<>());
         films.put(id, film);
         id++;
         log.debug("Добавлен фильм: {}", film);
@@ -62,7 +62,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         log.debug("Получен запрос PUT");
         FilmValidator.checkFilm(film);
         if (film.getLikes() == null) {
-            film.setLikes(new TreeSet<>());
+            film.setLikes(new HashSet<>());
         }
         int id = film.getId();
         films.put(id, film);
