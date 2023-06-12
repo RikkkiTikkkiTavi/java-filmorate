@@ -6,17 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDbStorage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,7 +39,7 @@ class FilmorateApplicationTests {
                 .login("login")
                 .email("mail@mail.ru")
                 .birthday(LocalDate.now())
-                .friends(new TreeSet<>())
+                .friends(new HashSet<>())
                 .build();
 
         testFilm = Film.builder()
@@ -51,9 +47,9 @@ class FilmorateApplicationTests {
                 .description("des")
                 .duration(200)
                 .releaseDate(LocalDate.now())
-                .likes(new TreeSet<>())
+                .likes(new HashSet<>())
                 .mpa(mpa)
-                .genres(new TreeSet<>(Comparator.comparingInt(Genre::getId)))
+                .genres(new HashSet<>())
                 .build();
 
         users = new ArrayList<>();
@@ -92,7 +88,7 @@ class FilmorateApplicationTests {
                 .login("newLogin")
                 .email("mail@mail.ru")
                 .birthday(LocalDate.now())
-                .friends(new TreeSet<>())
+                .friends(new HashSet<>())
                 .build();
         assertEquals(userStorage.update(updateUser), updateUser);
         assertEquals(userStorage.findAll().get(0), updateUser);
@@ -123,7 +119,7 @@ class FilmorateApplicationTests {
                 .description("newDes")
                 .duration(300)
                 .releaseDate(LocalDate.now())
-                .likes(new TreeSet<>())
+                .likes(new HashSet<>())
                 .mpa(mpa)
                 .build();
         assertEquals(filmStorage.update(updateFilm), updateFilm);
