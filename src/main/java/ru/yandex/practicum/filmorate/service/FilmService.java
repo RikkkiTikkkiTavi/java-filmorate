@@ -41,11 +41,17 @@ public class FilmService {
     }
 
     public Film create(Film film) {
+        if (film.getLikes() == null) {
+            film.setLikes(new HashSet<>());
+        }
         FilmValidator.checkFilm(film);
         return storage.create(film);
     }
 
     public Film update(Film film) {
+        if (film.getLikes() == null) {
+            film.setLikes(new HashSet<>());
+        }
         FilmValidator.checkFilm(film);
         return storage.update(film);
     }

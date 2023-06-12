@@ -5,7 +5,6 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.*;
 
 @Slf4j
 public class FilmValidator {
@@ -25,9 +24,6 @@ public class FilmValidator {
         }
         if (film.getDuration() <= 0) {
             throw new ValidationException("Продолжительность фильма должна быть положительной");
-        }
-        if (film.getLikes() == null) {
-            film.setLikes(new TreeSet<>());
         }
     }
 }
