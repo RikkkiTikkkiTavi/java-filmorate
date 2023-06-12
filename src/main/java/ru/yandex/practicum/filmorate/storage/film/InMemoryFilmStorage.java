@@ -1,24 +1,32 @@
 package ru.yandex.practicum.filmorate.storage.film;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
 
 import java.util.*;
 
 @Component
+@Qualifier("InMemoryFilmStorage")
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
+    @Override
+    public void addLike(int filmId, int userId) {
+
+    }
+
+    @Override
+    public void deleteLike(int filmId, int userId) {
+
+    }
 
     private final Map<Integer, Film> films = new HashMap<>();
     private int id = 1;
-
-    @Override
-    public Map<Integer, Film> findAllMap() {
-        return films;
-    }
 
     @Override
     public List<Film> findAll() {
@@ -28,11 +36,21 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
+    public List<Genre> findGenres() {
+        return null;
+    }
+
+    @Override
+    public List<Mpa> findMpa() {
+        return null;
+    }
+
+    @Override
     public Film create(Film film) {
         log.info("Получен запрос POST");
         FilmValidator.checkFilm(film);
         film.setId(id);
-        film.setLikes(new TreeSet<>());
+        film.setLikes(new HashSet<>());
         films.put(id, film);
         id++;
         log.debug("Добавлен фильм: {}", film);
@@ -43,13 +61,32 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film update(Film film) {
         log.debug("Получен запрос PUT");
         FilmValidator.checkFilm(film);
-        FilmValidator.checkId(films, film);
         if (film.getLikes() == null) {
-            film.setLikes(new TreeSet<>());
+            film.setLikes(new HashSet<>());
         }
         int id = film.getId();
         films.put(id, film);
         log.debug("Обновлен фильм: {}", film);
         return film;
+    }
+
+    @Override
+    public Film findFilmById(int id) {
+        return null;
+    }
+
+    @Override
+    public Genre findGenreById(int id) {
+        return null;
+    }
+
+    @Override
+    public Mpa findMpaById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Film> getTopLikesFilms(int count) {
+        return null;
     }
 }

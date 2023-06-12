@@ -13,13 +13,32 @@ import java.util.Map;
 @Component
 @Slf4j
 public class InMemoryUserStorage implements UserStorage {
-    private final Map<Integer, User> users = new HashMap<>();
-    private int id = 1;
+    @Override
+    public List<User> getUserFriends(int userId) {
+        return null;
+    }
 
     @Override
-    public Map<Integer, User> findAllMap() {
-        return users;
+    public User findUserById(int id) {
+        return null;
     }
+
+    @Override
+    public void addFriend(int userId, int friendId) {
+    }
+
+    @Override
+    public void removeFriend(int userId, int friendId) {
+
+    }
+
+    @Override
+    public List<User> getMutualFriends(int userId, int friendId) {
+        return null;
+    }
+
+    private final Map<Integer, User> users = new HashMap<>();
+    private int id = 1;
 
     @Override
     public List<User> findAll() {
@@ -43,7 +62,6 @@ public class InMemoryUserStorage implements UserStorage {
     public User update(User user) {
         log.info("Получен запрос PUT");
         UserValidator.checkUser(user);
-        UserValidator.checkId(users, user);
         users.put(user.getId(), user);
         log.debug("Пользователь обновлен: {}", user);
         return user;
